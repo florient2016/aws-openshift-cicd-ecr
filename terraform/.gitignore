@@ -1,0 +1,10 @@
+
+# Terraform variable files
+*.tfvars
+*.tfvars.json
+.terraform/
+.terraform.lock.hcl
+.terraform.tfstate
+.terraform.tfstate.backup
+.terraform.tfstate.d/
+rendered/*.yaml

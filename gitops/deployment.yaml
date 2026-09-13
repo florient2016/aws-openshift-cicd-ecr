@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+  namespace: app-prod
+  labels: { app: app }
+spec:
+  replicas: 2
+  selector: { matchLabels: { app: app } }
+  template:
+    metadata: { labels: { app: app } }
+    spec:
+      containers:
+        - name: app
+          # ⚠️ REMPLACER par: <terraform output image>@sha256:<digest du build>
+          # Déploiement PAR DIGEST (immuable) — pas de :latest mouvant.
+          image: REPLACE_ME_ECR_IMAGE@sha256:REPLACE_ME_DIGEST
+          ports: [{ containerPort: 8080 }]
+          resources:
+            requests: { cpu: 50m, memory: 64Mi }
+            limits: { memory: 128Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+            runAsNonRoot: true
+            capabilities: { drop: ["ALL"] }
+            seccompProfile: { type: RuntimeDefault }
