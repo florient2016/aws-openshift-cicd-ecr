@@ -38,7 +38,7 @@ spec:
   params:
     - { name: IMAGE, type: string }        # ${image}
     - { name: TAG, type: string, default: "1.0.0" }
-    - { name: CONTEXT, type: string, default: "repo" }
+    - { name: CONTEXT, type: string, default: "repo/app" }
   workspaces:
     - { name: source }
   results:

@@ -19,11 +19,15 @@ image hors de notre ECR**.
 
 ## Déploiement
 ```bash
-# 0) pousse app/ et gitops/ dans ton repo Git
+# 0a) Installer les opérateurs Pipelines + GitOps (CRD requis), puis attendre
+oc apply -f operators.yaml
+oc get crd | grep -E 'tasks.tekton.dev|applications.argoproj.io'   # attendre qu'ils apparaissent
+oc api-resources | grep tekton                                     # confirmer tekton.dev/v1
+
+# 0b) pousse app/ et gitops/ dans ton repo Git
 cd terraform
 cat > terraform.tfvars <<EOF
 region          = "us-east-1"
-#oc get authentication cluster -o jsonpath='{.spec.serviceAccountIssuer}'
 oidc_issuer_url = "https://rh-oidc.s3.us-east-1.amazonaws.com/xxxxxxxx"
 git_repo_url    = "https://gitlab.com/<toi>/cicd-01.git"
 EOF
